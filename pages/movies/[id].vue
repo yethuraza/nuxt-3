@@ -1,10 +1,14 @@
 <script setup>
     const route = useRoute()
-    const message = computed(() => `The dynamic page with route params ${route.params.id}`)
+    const {data} = useAsyncData(`/movies/${route.params.id}`,() => {
+        return $fetch(`http://www.omdbapi.com/?apikey=a2e4475f&i=${route.params.id}`)
+    })
+    
 </script>
+
 
 <template>
     <div>
-        {{message}}
+        <pre>{{ data }}</pre>
     </div>
 </template>
